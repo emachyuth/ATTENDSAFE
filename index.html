@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AttendSafe — Unified v3</title>
+<style>
+:root{--bg:#06111f;--p:#0d2035;--p2:#102943;--l:#24425e;--t:#eef6ff;--m:#9bb4cf;--c:#49d7ff;--g:#37e39b;--y:#ffc83d;--r:#ff5e7a}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 15% 0,#123050,#06111f 45%);color:var(--t);font:15px system-ui,-apple-system,Segoe UI,Roboto,sans-serif}.wrap{max-width:1450px;margin:auto;padding:24px}.top{display:flex;justify-content:space-between;gap:15px;align-items:center}.brand{display:flex;gap:13px;align-items:center}.logo{width:54px;height:54px;border-radius:16px;background:linear-gradient(135deg,#55e4d3,#609cff);display:grid;place-items:center;color:#06111f;font-weight:900}.brand h1{margin:0;font-size:30px}.brand p,.mini{color:var(--m);margin:4px 0}.controls{display:flex;gap:9px;flex-wrap:wrap;align-items:center}select,input,button{font:inherit}select,input{background:#081a2d;border:1px solid #2a4965;color:var(--t);padding:10px 12px;border-radius:11px}button{padding:11px 15px;border-radius:11px;border:0;font-weight:800;cursor:pointer}.primary{background:var(--c);color:#04111c}.ghost{background:#132b45;color:var(--t);border:1px solid var(--l)}
+.hero,.card{background:rgba(13,32,53,.94);border:1px solid var(--l);border-radius:20px}.hero{margin-top:20px;padding:23px}.hero h2,.card h2{margin-top:0}.hero p{color:var(--m);line-height:1.6;max-width:1050px}.alert{padding:14px 17px;border-radius:13px;margin-top:14px;font-weight:750}.safe{background:#0d3b2c;color:#8bffca;border:1px solid #237d5b}.warn{background:#3b2b08;color:#ffdc68;border:1px solid #84651c}.danger{background:#421424;color:#ff9eb1;border:1px solid #8e2945}.info{background:#102f46;color:#91e3ff;border:1px solid #27627f}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-top:16px}.card{padding:19px}.kpi small{color:var(--m)}.kpi b{display:block;font-size:33px;margin-top:7px}.green{color:var(--g)}.yellow{color:var(--y)}.red{color:var(--r)}.bar{height:8px;background:#19334c;border-radius:8px;margin-top:10px;overflow:hidden}.fill{height:100%;border-radius:8px}
+.planner{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:15px}.big{font-size:20px;font-weight:900;margin-top:4px}.main{display:grid;grid-template-columns:1.55fr 1fr;gap:15px;margin-top:15px}.subject{padding:17px 0;border-bottom:1px solid #1d3852}.subject:last-child{border-bottom:0}.row{display:grid;grid-template-columns:1fr 95px 95px 1.05fr;gap:11px;align-items:center}.sname{font-weight:850;font-size:16px}.field label{display:block;color:var(--m);font-size:12px;margin-bottom:4px}.field input{width:100%}.plan{display:flex;flex-direction:column;gap:9px}.planitem{padding:13px;border:1px solid var(--l);border-radius:13px;background:#091c2f}.pill{display:inline-block;padding:5px 8px;border-radius:999px;background:#143b50;color:#8cecff;font-size:12px;font-weight:800;margin-top:6px}.dp{background:#4b1729;color:#ff9eb2}.gp{background:#123d30;color:#8affc8}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:15px}.chart{height:240px;display:flex;align-items:flex-end;gap:7px;padding:12px 4px}.bc{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:5px}.br{width:min(50px,70%);border-radius:7px 7px 2px 2px}.bl{font-size:10px;color:var(--m);text-align:center}.foot{text-align:center;color:var(--m);padding:18px;font-size:12px}
+.chatbtn{position:fixed;right:24px;bottom:24px;width:61px;height:61px;border-radius:50%;background:linear-gradient(135deg,#49d7ff,#a98bff);color:#03111e;font-size:24px;z-index:5}.chat{position:fixed;right:24px;bottom:96px;width:min(390px,calc(100vw - 28px));height:510px;background:#081a2d;border:1px solid #31516d;border-radius:20px;box-shadow:0 20px 60px #000b;display:none;flex-direction:column;z-index:6;overflow:hidden}.chat.open{display:flex}.chathead{padding:14px 16px;background:#102943;border-bottom:1px solid var(--l);display:flex;justify-content:space-between}.msgs{flex:1;overflow:auto;padding:13px}.msg{padding:9px 11px;border-radius:12px;margin-bottom:8px;line-height:1.45;font-size:13px}.bot{background:#102943}.usr{background:#143c50;margin-left:30px}.chatinput{display:flex;gap:7px;padding:9px;border-top:1px solid var(--l)}.chatinput input{flex:1}
+@media(max-width:1000px){.grid4{grid-template-columns:repeat(2,1fr)}.main,.two{grid-template-columns:1fr}.row{grid-template-columns:1fr 90px 90px}.row>div:last-child{grid-column:1/-1}.planner{grid-template-columns:1fr}}@media(max-width:600px){.wrap{padding:13px}.top{flex-direction:column;align-items:flex-start}.grid4{grid-template-columns:1fr}.brand h1{font-size:25px}}
+
+.datebtn{display:flex;align-items:center;justify-content:space-between;gap:16px;min-width:250px;padding:12px 16px;border:1px solid #284564;border-radius:14px;background:#081b2e;color:#fff;font:inherit;font-weight:700;cursor:pointer}
+.datebtn:hover{border-color:#58d8ff}
+.calicon{color:#67d9ff;font-size:18px}
+.calendar-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.28);z-index:1000;display:none}
+.calendar-backdrop.open{display:block}
+.calendar-pop{position:absolute;right:24px;top:78px;width:360px;background:#0b2036;border:1px solid #294865;border-radius:18px;box-shadow:0 24px 70px rgba(0,0,0,.45);padding:18px}
+.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.cal-title{font-size:20px;font-weight:800}
+.cal-nav{width:38px;height:38px;border-radius:10px;border:1px solid #294865;background:#102b45;color:#fff;cursor:pointer;font-size:20px}
+.cal-nav:disabled{opacity:.35;cursor:not-allowed}
+.cal-week,.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cal-week div{font-size:12px;text-align:center;color:#8fa8c1;padding:5px 0}
+.cal-day{height:40px;border:0;border-radius:10px;background:transparent;color:#eaf4ff;font-weight:700;cursor:pointer}
+.cal-day:hover:not(:disabled){background:#163c5c}
+.cal-day.muted{opacity:.25;cursor:default}
+.cal-day.selected{background:#54d7ff;color:#082039}
+.cal-day:disabled{opacity:.25;cursor:not-allowed}
+.cal-help{text-align:center;color:#8fa8c1;font-size:12px;margin-top:12px}
+</style></head><body><div class="wrap">
+<header class="top"><div class="brand"><div class="logo">AS</div><div><h1>AttendSafe</h1><p>Smart attendance planning • protect 75% • target 90%</p></div></div><div class="controls"><select id="section"></select>
+<label class="mini plan-control">Plan from
+  <button id="planDateBtn" type="button" class="datebtn" aria-haspopup="dialog" aria-expanded="false">
+    <span id="planDateBtnText">28 Sep 2026</span><span class="calicon">▣</span>
+  </button>
+  <input id="planDate" type="hidden" value="2026-09-28">
+</label>
+<button id="reset" class="ghost">Reset demo</button></div></header>
+<section class="hero"><h2>Know the consequence before you miss the class.</h2><p>Choose your section, enter current subject attendance, and select a future planning date. AttendSafe uses the supplied timetables and the semester window <b>29 Aug 2026 → 29 Nov 2026</b> to calculate scheduled classes left, recovery requirements, and whether recovery is mathematically possible.</p><div id="heroAlert"></div></section>
+<section class="grid4"><div class="card kpi"><small>Overall attendance</small><b id="overall">—</b><div class="bar"><div id="overallBar" class="fill"></div></div></div><div class="card kpi"><small>Classes held so far</small><b id="held">—</b></div><div class="card kpi"><small>Classes remaining</small><b id="remaining">—</b></div><div class="card kpi"><small>At-risk subjects</small><b id="risk">—</b></div></section>
+<section class="planner"><div class="card"><div class="mini">Planning date</div><div id="dateLabel" class="big">—</div></div><div class="card"><div class="mini">75% safety plan</div><div id="safeSummary" class="big">—</div></div><div class="card"><div class="mini">90% target plan</div><div id="targetSummary" class="big">—</div></div></section>
+<div class="main"><section class="card"><h2>Subject attendance</h2><div id="subjects"></div></section><aside><section class="card"><h2>What should I attend?</h2><div id="plans" class="plan"></div></section><section class="card" style="margin-top:15px"><h2>Upcoming timetable</h2><div id="upcoming" class="plan"></div></section></aside></div>
+<div class="two"><section class="card"><h2>Attendance health</h2><div id="chart" class="chart"></div><div class="mini">Green ≥90% • Yellow 75–89.9% • Red &lt;75%</div></section><section class="card"><h2>OD / Medical Leave Simulator</h2><p class="mini">Choose a leave duration starting from the planning date. AttendSafe counts the actual timetable classes falling inside that leave window and shows the projected semester outcome.</p><div class="controls"><label class="mini">Days <input id="leaveDays" type="number" min="0" max="30" value="0"></label><select id="leaveType"><option value="excluded">Approved OD/medical excluded from attendance</option><option value="attended">Approved OD/medical counted as attended</option><option value="absent">Leave treated as absent</option></select></div><div id="leaveResult" class="alert info">Enter leave days to simulate.</div></section></div>
+<div class="foot">AttendSafe • Unified Phase 1 + Phase 2 MVP • 10 supplied timetable files • Timetable-based projections</div></div>
+<button id="chatBtn" class="chatbtn">✦</button><div id="chat" class="chat"><div class="chathead"><b>Attendance Advisor</b><button id="close" class="ghost">×</button></div><div id="msgs" class="msgs"><div class="msg bot">Ask me about 75%, 90%, missed classes, a subject to prioritize, or a leave simulation.</div></div><div class="chatinput"><input id="chatInput" placeholder="e.g. Can I miss 3 classes?"><button id="send" class="primary">Send</button></div></div>
+
+<div id="calendarBackdrop" class="calendar-backdrop" aria-hidden="true">
+  <div id="calendarPop" class="calendar-pop" role="dialog" aria-label="Choose planning date">
+    <div class="cal-head">
+      <button id="calPrev" class="cal-nav" type="button" aria-label="Previous month">‹</button>
+      <div id="calTitle" class="cal-title"></div>
+      <button id="calNext" class="cal-nav" type="button" aria-label="Next month">›</button>
+    </div>
+    <div class="cal-week">
+      <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+    </div>
+    <div id="calGrid" class="cal-grid"></div>
+    <div class="cal-help">Choose a planning date between 29 Aug and 29 Nov 2026.</div>
+  </div>
+</div>
+<script>
+const START='2026-08-29',END='2026-11-29';
+const PERIODS=['09:00–09:50','09:50–10:40','10:50–11:40','11:40–12:30','12:30–13:20','13:20–14:10','14:10–15:00','15:10–16:00','16:00–16:50'];
+const DATA={
+'II ECE-DS A':{subjects:{A:'Transforms and Boundary Value Problems',B:'Solid State Devices',C:'Computer Organization and Architecture',D:'Digital Logic Design',E:'Electromagnetic Theory and Interference',F:'Professional Ethics',G:'Universal Human Values-II',H:'Verbal Reasoning',I:'Social Engineering',LAB:'Devices and Digital IC Laboratory'},w:[['E','A','I','I','','','G','LAB','LAB'],['C','A','E','D','','','G','I','I'],['A','B','C','D','','','','',''],['B','C','A','F','','','LAB','',''],['D','B','E','C','','','','','']]},
+'III BME':{subjects:{A:'Probability and Statistics',B:'Microcontrollers and its Application in Medicine',C:'Biomedical Signal Processing',D:'Biometrics',E:'Modern wireless communication system',F:'Principles of Medical Imaging',G:'Analytical and Logical Thinking Skills',H:'Indian Art Form',I:'Community Connect',LAB:'MPMC/Bio DSP Laboratory'},w:[['G','G','LAB','LAB','','E','B','F','H'],['LAB','LAB','G','','','','C','D','A'],['','','','','','','C','A','F','D'],['','','','G','','','A','C','E','B'],['','LAB','','','','','F','A','D','E']]},
+'III ECE-A':{subjects:{A:'Discrete Mathematics',B:'Microprocessor, Microcontroller, and Interfacing Techniques',C:'VLSI Design and Technology',D:'System and Network on Chip',E:'Machine learning for all',F:'Community connect',G:'Analytical and logical thinking skills',H:'Indian Art Form',LAB:'VLSI Design/Microprocessor Laboratory'},w:[['E','B','B','A','','G','G','',''],['H','D','B','B','','','','',''],['C','A','D','F','','','','LAB','LAB'],['A','E','C','F','','','','',''],['D','A','E','C','','LAB','LAB','','']]},
+'III ECE-B':{subjects:{A:'Discrete Mathematics',B:'Microprocessor, Microcontroller, and Interfacing Techniques',C:'VLSI Design and Technology',D:'System and Network on Chip',E:'Machine learning for all',F:'Community connect',G:'Analytical and logical thinking skills',H:'Indian Art Form',LAB:'VLSI Design/Microprocessor Laboratory'},w:[['LAB','LAB','','','','E','B','A','D'],['G','','','','','F','B','D','C'],['G','','','','','B','B','A','H'],['LAB','','','','','A','C','E','F'],['','','','','','C','A','E','D']]},
+'III ECE-DS':{subjects:{A:'Discrete Mathematics',B:'Microprocessor, Microcontroller, and Interfacing Techniques',C:'VLSI Design and Technology',D:'Machine learning for all',E:'Database Design and Management',F:'Community connect',G:'Analytical and logical thinking skills',H:'Indian Art Form',LAB:'VLSI Design/Microprocessor Laboratory'},w:[['E','B','C','A','','','','',''],['C','B','D','F','','LAB','LAB','',''],['H','B','A','C','','','','G','G'],['A','D','E','F','','','','',''],['D','A','E','LAB','','G','G','LAB','LAB']]},
+'IV ECE-A':{subjects:{A:'Behavioural Psychology',B:'Wireless Communication and Antenna Systems',C:'Computer Communication and Network Security',D:'Semiconductor Memory Design',E:'Scripting Language for Electronic Design Automation',F:'Machine learning for all',LAB:'Computer Communication and Network Security Laboratory'},w:[['C','','A','D','','','','',''],['C','D','B','F','','','','',''],['B','LAB','E','F','','','','',''],['F','A','E','B','','','','',''],['C','A','D','E','','','','','']]},
+'IV ECE-B':{subjects:{A:'Behavioural Psychology',B:'Wireless Communication and Antenna Systems',C:'Computer Communication and Network Security',D:'Semiconductor Memory Design',E:'Scripting Language for Electronic Design Automation',F:'Machine learning for all',LAB:'Computer Communication and Network Security Laboratory'},w:[['C','A','E','F','','','','',''],['C','E','F','B','','','','',''],['C','D','A','B','','','','',''],['D','B','LAB','A','','','','',''],['E','D','F','','','','','','']]},
+'II ECE-DS B':{subjects:{A:'Transforms and Boundary Value Problems',B:'Solid State Devices',C:'Computer Organization and Architecture',D:'Digital Logic Design',E:'Electromagnetic Theory and Interference',F:'Professional Ethics',G:'Universal Human Values-II',H:'Verbal Reasoning',I:'Social Engineering',LAB:'Devices and Digital IC Laboratory'},w:[['','','LAB','LAB','','D','B','C','I'],['LAB','LAB','','','','C','D','E','A'],['G','','','','','I','E','A','D'],['G','G','LAB','LAB','','A','C','B','E'],['LAB','','','','','F','A','B','C']]},
+'II BME':{subjects:{A:'Transforms and Boundary Value Problems',B:'Biomedical Signals and Systems',C:'Electric and Electronic Circuits',D:'Digital Logic for Medical Systems',E:'Medical Physics',F:'Professional Ethics',G:'Universal Human Values-II',H:'Verbal Reasoning',I:'Social Engineering'},w:[['E','C','I','I','','','LAB','',''],['C','E','B','A','','','H','',''],['B','D','A','','','','H','G',''],['A','E','B','D','','','','H','I'],['F','A','C','D','','','','G','']]},
+'I ECE-A (source 2024-25)':{subjects:{A:'Advanced Calculus and Complex Analysis',B:'Physical Chemistry',C:'Electronic System and PCB Design',D:'Programming for Problem Solving',E:'Philosophy of Engineering',F:'Biology',G:'General Aptitude',H:'German',LAB:'PPS/Che Lab/Workshop'},w:[['E','E','B','A','','LAB','LAB','F','G'],['C','B','A','D','','LAB','LAB','',''],['B','E','D','','','LAB','LAB','LAB','LAB'],['','H','','A','','G','G','H','H'],['D','A','C','B','','H','H','H','H']]}
+};
+const $=x=>document.getElementById(x),secs=$('section');
+Object.keys(DATA).forEach(k=>secs.add(new Option(k,k)));
+const iso=d=>{const y=d.getFullYear();const m=String(d.getMonth()+1).padStart(2,'0');const day=String(d.getDate()).padStart(2,'0');return `${y}-${m}-${day}`}, dt=s=>{let[a,b,c]=s.split('-').map(Number);return new Date(a,b-1,c)};
+function count(section,slot,a,b){let n=0,w=DATA[section].w;for(let d=new Date(a);d<=b;d.setDate(d.getDate()+1)){let wd=d.getDay();if(wd>=1&&wd<=5)n+=w[wd-1].filter(x=>x===slot).length}return n}
+function remain(section,slot,from){let end=dt(END);return count(section,slot,from,end)}
+function pct(a,b){return a+b?100*a/(a+b):100}
+function need(a,b,targetPct){const total=a+b; if(total<=0)return 0; const current=a/total*100; const target=Number(targetPct)/100; if(current+1e-9>=Number(targetPct))return 0; return Math.max(0,Math.ceil(((target*total)-a)/(1-target)-1e-9));}
+let store=JSON.parse(localStorage.getItem('attendsafe-unified')||'{}');
+function getVals(sec){store[sec]=store[sec]||{};for(const slot in DATA[sec].subjects)store[sec][slot]??={a:10,b:2};return store[sec]}
+function render(){
+ let sec=secs.value, vals=getVals(sec), today=new Date(), pd=$('planDate').value||iso(today);
+ if(pd<START)pd=START;if(pd>END)pd=END;$('planDate').value=pd;
+ $('planDateBtnText').textContent=dt(pd).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+ let from=dt(pd);
+ let rows=[],A=0,B=0,R=0;
+ for(const [slot,name] of Object.entries(DATA[sec].subjects)){let v=vals[slot],a=+v.a||0,b=+v.b||0,r=remain(sec,slot,from),p=pct(a,b),n75=need(a,b,75),n90=need(a,b,90),max75=(a+r)/(a+b+r)*100,max90=max75;rows.push({slot,name,a,b,r,p,n75,n90,max75,max90});A+=a;B+=b;R+=r}
+ let op=pct(A,B),n75=need(A,B,75),n90=need(A,B,90),max=(A+R)/(A+B+R)*100;
+ $('overall').textContent=op.toFixed(1)+'%';$('overall').className=op>=90?'green':op>=75?'yellow':'red';$('overallBar').style.width=Math.min(100,op)+'%';$('overallBar').style.background=op>=90?'var(--g)':op>=75?'var(--y)':'var(--r)';
+ $('held').textContent=A+B;$('remaining').textContent=R;$('risk').textContent=rows.filter(r=>r.p<75||r.n75>r.r).length;
+ $('dateLabel').textContent=from.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+ $('safeSummary').textContent=op>=75?'Safe now':n75<=R?'Attend '+n75:'Cannot recover';
+ $('targetSummary').textContent=op>=90?'Already ≥90%':n90<=R?'Attend '+n90:'Max '+max.toFixed(1)+'%';
+ let msg,cl;if(op<75||rows.some(r=>r.p<75&&r.n75>r.r)){cl='danger';msg='⚠️ IRREVERSIBLE DETENTION — at least one current subject cannot reach 75% by 29 Nov 2026 even if every remaining class is attended.'}else if(op<90){cl='warn';msg='You are above 75% but below the 90% target. Follow the subject recovery plan and avoid unnecessary absences.'}else{cl='safe';msg='You are at/above 90%. AttendSafe shows exactly how much attendance room you have.'}$('heroAlert').innerHTML=`<div class="alert ${cl}">${msg}</div>`;
+ $('subjects').innerHTML=rows.map(r=>`<div class="subject"><div class="row"><div><div class="sname">${r.name}</div><div class="mini">Slot ${r.slot} • ${r.a+r.b} held • ${r.r} remaining</div><div class="bar"><div class="fill" style="width:${Math.min(100,r.p)}%;background:${r.p>=90?'var(--g)':r.p>=75?'var(--y)':'var(--r)'}"></div></div></div><div class="field"><label>Attended</label><input data-s="${r.slot}" data-k="a" type="number" min="0" value="${r.a}"></div><div class="field"><label>Absent</label><input data-s="${r.slot}" data-k="b" type="number" min="0" value="${r.b}"></div><div><div class="mini">Now</div><b class="${r.p>=90?'green':r.p>=75?'yellow':'red'}">${r.p.toFixed(1)}%</b><div class="mini">90% plan</div><b>${r.p>=90?'Already ≥90%':r.n90<=r.r?'Attend '+r.n90:`Unreachable • max ${r.max90.toFixed(1)}%`}</b></div></div></div>`).join('');
+ document.querySelectorAll('#subjects input').forEach(i=>i.oninput=()=>{vals[i.dataset.s][i.dataset.k]=Math.max(0,+i.value||0);store[sec]=vals;localStorage.setItem('attendsafe-unified',JSON.stringify(store));render()});
+ $('plans').innerHTML=rows.filter(r=>r.p<90).sort((a,b)=>a.p-b.p).slice(0,7).map(r=>{let t=r.p<75?(r.n75<=r.r?'Attend '+r.n75+' to recover to 75%':'IRREVERSIBLE DETENTION'):(r.p>=90?'Already at/above 90%':r.n90<=r.r?'Attend '+r.n90+' straight to reach 90%':'90% unreachable • max '+r.max90.toFixed(1)+'%');return `<div class="planitem"><b>${r.name}</b><div class="mini">${r.p.toFixed(1)}% now • ${r.r} classes left</div><span class="pill ${t.includes('IRREVERSIBLE')||t.includes('unreachable')?'dp':''}">${t}</span></div>`}).join('')||'<div class="planitem">No immediate recovery action.</div>';
+ let upcoming=[],d=new Date(from);for(let day=0;day<30&&upcoming.length<7;day++,d.setDate(d.getDate()+1)){let wd=d.getDay();if(wd<1||wd>5)continue;DATA[sec].w[wd-1].forEach((slot,i)=>{if(slot&&upcoming.length<7)upcoming.push(`<div class="planitem"><b>${DATA[sec].subjects[slot]||slot}</b><div class="mini">${d.toLocaleDateString('en-IN',{weekday:'short',day:'2-digit',month:'short'})} • P${i+1} • ${PERIODS[i]}</div></div>`)})}$('upcoming').innerHTML=upcoming.join('');
+ $('chart').innerHTML=rows.map(r=>`<div class="bc"><div class="bl">${r.p.toFixed(0)}%</div><div class="br" style="height:${Math.max(5,r.p*1.45)}px;background:${r.p>=90?'linear-gradient(#37e39b,#20a876)':r.p>=75?'linear-gradient(#ffc83d,#d58f13)':'linear-gradient(#ff5e7a,#c32f50)'}"></div><div class="bl">${r.name.split(' ').slice(0,2).join(' ')}</div></div>`).join('');
+ window.ctx={sec,from,rows,A,B,R,op,n75,n90,max};simulateLeave(); 
+}
+function leaveClasses(sec,start,days){let n=0,end=new Date(start);end.setDate(end.getDate()+days-1);for(let d=new Date(start);d<=end;d.setDate(d.getDate()+1)){let w=d.getDay();if(w>=1&&w<=5)n+=DATA[sec].w[w-1].filter(Boolean).length}return n}
+function simulateLeave(){let days=+$('leaveDays').value||0;if(!days){$('leaveResult').textContent='Enter leave days to simulate.';return}let c=leaveClasses(window.ctx.sec,window.ctx.from,days),total=window.ctx.A+window.ctx.B,remaining=window.ctx.R,att=window.ctx.A,mode=$('leaveType').value;let projected;if(mode==='excluded')projected=(att+(remaining-c))/(total+remaining-c);else projected=(att+(mode==='attended'?c:0)+(remaining-c))/(total+remaining);let p=projected*100;$('leaveResult').textContent=`${c} timetable classes fall inside the ${days}-day leave window. Projected semester attendance: ${p.toFixed(1)}%. ${p<75?'⚠️ Below 75% — detention risk.':p<90?'Above 75%, but below 90%.':'At/above 90%.'}`}
+function advisor(q){
+ let c=window.ctx,t=q.toLowerCase(),m=q.match(/(\d+)\s*(?:class|classes)/),n=m?+m[1]:null;
+ const subject=c.rows.find(r=>t.includes(r.name.toLowerCase()));
+ const row=subject||c.rows.slice().sort((a,b)=>a.p-b.p)[0];
+ if(t.includes('90')){
+   if(subject){return subject.n90<=subject.r?`${subject.name} is ${subject.p.toFixed(1)}% now. Attend ${subject.n90} more classes consecutively to reach 90%.`:`90% is unreachable for ${subject.name} from the current numbers. Even attending every remaining class would reach only ${subject.max90.toFixed(1)}%.`;}
+   return c.n90<=c.R?`Overall attendance is ${c.op.toFixed(1)}%. Attend ${c.n90} remaining classes with no further absences to reach 90%.`:`90% is unreachable overall; the maximum possible attendance is ${c.max.toFixed(1)}%.`;
+ }
+ if(t.includes('75')||t.includes('detention')||t.includes('danger')){
+   if(subject){return subject.n75<=subject.r?`${subject.name} is ${subject.p.toFixed(1)}% now. Attend at least ${subject.n75} remaining classes to reach 75%.`:`⚠️ ${subject.name} cannot recover to 75% this semester. Maximum possible attendance is ${subject.max75.toFixed(1)}%.`;}
+   return c.n75<=c.R?`Overall attendance is ${c.op.toFixed(1)}%. You need ${c.n75} more attended classes to reach 75%.`:`⚠️ Recovery to 75% is mathematically impossible with the remaining ${c.R} scheduled classes.`;
+ }
+ if(n&&/(miss|skip|absent)/.test(t)){
+   if(subject){const p=subject.a/(subject.a+subject.b+n)*100;return `If you miss ${n} more ${subject.name} classes, the subject would be about ${p.toFixed(1)}%. ${p<75?'That would be below 75%.':p<90?'You would remain above 75% but below 90%.':'You would remain at/above 90%.'}`;}
+   const p=c.A/(c.A+c.B+n)*100;return `If you miss ${n} more classes overall, a simple projection is ${p.toFixed(1)}%. ${p<75?'That would be below 75%.':p<90?'You would remain above 75% but below 90%.':'You would remain at/above 90%.'}`;
+ }
+ if(/leave|sick|medical|od/.test(t)){
+   const dm=t.match(/(\d+)\s*(?:day|days)/); if(dm){const days=+dm[1],lc=leaveClasses(c.sec,c.from,days);return `${lc} timetable classes fall inside a ${days}-day leave window starting on the planning date. If those classes are not counted as attendance, the projected semester attendance is ${((c.A+(c.R-lc))/(c.A+c.B+c.R)*100).toFixed(1)}%.`;}
+ }
+ return `Prioritize ${row.name} at ${row.p.toFixed(1)}%. ${row.p<75?(row.n75<=row.r?'Attend '+row.n75+' next to recover to 75%.':'It cannot recover to 75% this semester.'):(row.n90<=row.r?'Attend '+row.n90+' straight to reach 90%.':'90% is unreachable; max '+row.max90.toFixed(1)+'%.')}`;
+}
+$('chatBtn').onclick=()=>{$('chat').classList.toggle('open')};$('close').onclick=()=>{$('chat').classList.remove('open')};function send(){let q=$('chatInput').value.trim();if(!q)return;$('msgs').insertAdjacentHTML('beforeend',`<div class="msg usr">${q.replace(/[<>&]/g,x=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[x]))}</div><div class="msg bot">${advisor(q)}</div>`);$('chatInput').value='';$('msgs').scrollTop=$('msgs').scrollHeight}$('send').onclick=send;$('chatInput').onkeydown=e=>{if(e.key==='Enter')send()};
+// Reactive controls + reliable custom planning-date calendar.
+const calBack=$('calendarBackdrop'), calPop=$('calendarPop'), calGrid=$('calGrid'), calTitle=$('calTitle');
+const calPrev=$('calPrev'), calNext=$('calNext'), planBtn=$('planDateBtn');
+const SEM_START=dt(START), SEM_END=dt(END);
+let calView=new Date(SEM_START.getFullYear(),SEM_START.getMonth(),1);
+
+function sameDay(a,b){return a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate();}
+function openCalendar(){
+  const cur=dt($('planDate').value||START);
+  calView=new Date(cur.getFullYear(),cur.getMonth(),1);
+  renderCalendar();
+  calBack.classList.add('open');
+  calBack.setAttribute('aria-hidden','false');
+  planBtn.setAttribute('aria-expanded','true');
+}
+function closeCalendar(){
+  calBack.classList.remove('open');
+  calBack.setAttribute('aria-hidden','true');
+  planBtn.setAttribute('aria-expanded','false');
+}
+function renderCalendar(){
+  const y=calView.getFullYear(), m=calView.getMonth();
+  calTitle.textContent=calView.toLocaleDateString('en-IN',{month:'long',year:'numeric'});
+  calPrev.disabled=(y===SEM_START.getFullYear() && m===SEM_START.getMonth());
+  calNext.disabled=(y===SEM_END.getFullYear() && m===SEM_END.getMonth());
+  calGrid.innerHTML='';
+  const first=new Date(y,m,1), start=new Date(y,m,1-first.getDay());
+  const selected=dt($('planDate').value||START);
+  for(let i=0;i<42;i++){
+    const d=new Date(start); d.setDate(start.getDate()+i);
+    const b=document.createElement('button');
+    b.type='button'; b.className='cal-day'; b.textContent=d.getDate();
+    const inMonth=d.getMonth()===m;
+    const inRange=d>=SEM_START&&d<=SEM_END;
+    if(!inMonth)b.classList.add('muted');
+    if(sameDay(d,selected))b.classList.add('selected');
+    if(!inRange){b.disabled=true;}
+    else{
+      b.addEventListener('click',()=>{
+        const value=iso(d);
+        $('planDate').value=value;
+        render();
+        closeCalendar();
+      });
+    }
+    calGrid.appendChild(b);
+  }
+}
+planBtn.addEventListener('click',e=>{e.stopPropagation(); if(calBack.classList.contains('open'))closeCalendar();else openCalendar();});
+calPrev.addEventListener('click',()=>{if(!calPrev.disabled){calView.setMonth(calView.getMonth()-1);renderCalendar();}});
+calNext.addEventListener('click',()=>{if(!calNext.disabled){calView.setMonth(calView.getMonth()+1);renderCalendar();}});
+calBack.addEventListener('click',e=>{if(e.target===calBack)closeCalendar();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeCalendar();});
+
+$('section').addEventListener('change',render);
+$('leaveDays').addEventListener('input',simulateLeave);
+$('leaveType').addEventListener('change',simulateLeave);
+
+$('reset').onclick=()=>{
+  localStorage.removeItem('attendsafe-unified');
+  $('planDate').value=iso(new Date());
+  if($('planDate').value<START)$('planDate').value=START;
+  if($('planDate').value>END)$('planDate').value=END;
+  $('section').value=Object.keys(DATA)[0];
+  closeCalendar();
+  render();
+};
+
+$('planDate').value=iso(new Date());
+if($('planDate').value<START)$('planDate').value=START;
+if($('planDate').value>END)$('planDate').value=END;
+render();
+</script></body></html>
